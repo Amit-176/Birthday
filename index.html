@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Happy Birthday PRATIBHA</title>
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      overflow: hidden;
+      font-family: 'Arial', sans-serif;
+      background-color: #222;
+      color: white;
+    }
+
+    #welcome-screen {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #222;
+      overflow: hidden;
+    }
+
+    .gate {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 50%;
+      background-color: #111;
+      z-index: 3;
+      transition: transform 2s ease-in-out;
+    }
+
+    .left-gate {
+      left: 0;
+      border-right: 2px solid #ff4081;
+    }
+
+    .right-gate {
+      right: 0;
+      border-left: 2px solid #ff4081;
+    }
+
+    .gate.open-left {
+      transform: translateX(-100%);
+    }
+
+    .gate.open-right {
+      transform: translateX(100%);
+    }
+
+    #start-btn {
+      padding: 15px 40px;
+      font-size: 24px;
+      background-color: #ff4081;
+      border: none;
+      color: white;
+      border-radius: 30px;
+      cursor: pointer;
+      z-index: 4;
+      transition: transform 0.2s ease;
+    }
+
+    #start-btn:hover {
+      transform: scale(1.1);
+    }
+
+    #start-btn::before {
+      content: "\2764\FE0F \1F490 ";
+      margin-right: 10px;
+    }
+
+    #birthday-section {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      text-align: center;
+      background-color: #111;
+      overflow: hidden;
+      display: none;
+    }
+
+    #confetti-canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+    }
+
+    .slider {
+      position: relative;
+      margin-top: 60px;
+      width: 70%;
+      max-width: 320px;
+      height: auto;
+      z-index: 2;
+      border-radius: 20px;
+      box-shadow: 0 0 20px rgba(255, 64, 129, 0.6);
+      overflow: hidden;
+      animation: fadeIn 2s ease-in-out;
+    }
+
+    .slides {
+      display: flex;
+      width: 100%;
+      animation: slide 15s infinite;
+    }
+
+    .slides img {
+      width: 100%;
+      flex-shrink: 0;
+    }
+
+    @keyframes slide {
+      0%, 20% { transform: translateX(0); }
+      25%, 45% { transform: translateX(-100%); }
+      50%, 70% { transform: translateX(-200%); }
+      75%, 95% { transform: translateX(-300%); }
+      100% { transform: translateX(0); }
+    }
+
+    .name-box {
+      position: relative;
+      z-index: 2;
+      margin-top: 20px;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      font-size: 50px;
+      font-weight: bold;
+      color: #ff4081;
+    }
+
+    .letter {
+      opacity: 0;
+      display: inline-block;
+      animation: fly-in 0.5s forwards;
+    }
+
+    .from-left { transform: translateX(-100px); }
+    .from-right { transform: translateX(100px); }
+    .from-top { transform: translateY(-100px); }
+    .from-bottom { transform: translateY(100px); }
+
+    @keyframes fly-in {
+      to {
+        opacity: 1;
+        transform: translate(0, 0);
+      }
+    }
+
+    .heart-text {
+      position: relative;
+      z-index: 2;
+      margin-top: 20px;
+      font-size: 24px;
+      animation: pulse 1s infinite;
+    }
+
+    .love-text {
+      font-size: 30px;
+      color: #ff69b4;
+      margin-top: 10px;
+      animation: fadeIn 2s ease-in-out forwards;
+    }
+
+    .cake {
+      position: relative;
+      margin: 30px auto;
+      width: 150px;
+      z-index: 2;
+      animation: fadeIn 2s ease-in-out;
+    }
+
+    .balloon {
+      position: absolute;
+      bottom: -100px;
+      width: 40px;
+      height: 60px;
+      background-color: red;
+      border-radius: 50% 50% 50% 50%;
+      animation: float 6s infinite ease-in-out;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-400px); }
+      100% { transform: translateY(0); }
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    @media (max-width: 768px) {
+      .name-box {
+        font-size: 36px;
+        gap: 6px;
+        margin-top: 10px;
+      }
+      .heart-text {
+        font-size: 18px;
+        margin-top: 10px;
+      }
+      .slider {
+        margin: 62px auto;
+        max-width: 80%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <audio id="bg-music"loop>
+    <source src="Song/Happy_Birthday___Disco_Singh___Diljit_Dosanjh___Surveen_Chawla___Latest_Punjabi_Songs_2024(128k).mp3" type="">
+   </audio>
+  <section id="welcome-screen">
+    <div class="gate left-gate" id="left-gate"></div>
+    <div class="gate right-gate" id="right-gate"></div>
+    <button id="start-btn">Open</button>
+  </section>
+
+  <section id="birthday-section">
+    <canvas id="confetti-canvas"></canvas>
+    <div class="slider">
+      <div class="slides">
+        <img src="PIC/pic1.jpg" alt="Slide 1" />
+        <img src="PIC/pic2.jpg" alt="Slide 2" />
+        <img src="PIC/pic3.jpg" alt="Slide 3" />
+        <img src="PIC/pic4.jpg" alt="Slide 4" />
+        <img src="PIC/pic5.jpg" alt="Slide 5" />
+        <img src="PIC/pic6.jpg" alt="Slide 6" />
+        <img src="PIC/pic7.jpg" alt="Slide 7" />
+        <img src="PIC/pic8.jpg" alt="Slide 8" />
+      </div>
+    </div>
+
+    <div class="name-box" id="name-box"></div>
+    <p class="heart-text">Happy Birthday! 💖</p>
+    <div class="love-text" id="love-text"></div>
+    <img src="PIC/cake.jpeg" alt="Cake" class="cake" id="cake" style="display: none;" />
+    <div id="balloon-container"></div>
+  </section>
+
+  <script>
+    const startBtn = document.getElementById("start-btn");
+    const leftGate = document.getElementById("left-gate");
+    const rightGate = document.getElementById("right-gate");
+    const welcomeScreen = document.getElementById("welcome-screen");
+    const birthdaySection = document.getElementById("birthday-section");
+    const bgMusic = document.getElementById("bg-music");
+    const loveText = document.getElementById("love-text");
+    const cake = document.getElementById("cake");
+    const balloonContainer = document.getElementById("balloon-container");
+
+    const audioTracks = [
+      'Song/Happy_Birthday___Disco_Singh___Diljit_Dosanjh.mp3',
+      'Song/happy2.mp3',
+      'Song/happy3.mp3'
+    ];
+
+    startBtn.addEventListener("click", () => {
+      leftGate.classList.add("open-left");
+      rightGate.classList.add("open-right");
+
+      const selectedTrack = audioTracks[Math.floor(Math.random() * audioTracks.length)];
+      bgMusic.src = selectedTrack;
+      bgMusic.play();
+
+      setTimeout(() => {
+        welcomeScreen.style.display = "none";
+        birthdaySection.style.display = "block";
+        startConfetti();
+        showNameLetters("PRATIBHA");
+        loveText.textContent = "I Love You My Jaan ❤️";
+        cake.style.display = "block";
+        launchBalloons();
+      }, 2000);
+    });
+
+    function showNameLetters(name) {
+      const nameBox = document.getElementById("name-box");
+      nameBox.innerHTML = "";
+      const directions = ["from-left", "from-right", "from-top", "from-bottom"];
+      [...name].forEach((char, i) => {
+        const span = document.createElement("span");
+        span.className = `letter ${directions[i % directions.length]}`;
+        span.textContent = char;
+        span.style.animationDelay = `${i * 0.2}s`;
+        nameBox.appendChild(span);
+      });
+    }
+
+    function launchBalloons() {
+      for (let i = 0; i < 15; i++) {
+        const balloon = document.createElement("div");
+        balloon.classList.add("balloon");
+        balloon.style.left = `${Math.random() * 100}%`;
+        balloon.style.backgroundColor = randomColor();
+        balloonContainer.appendChild(balloon);
+      }
+    }
+
+    const canvas = document.getElementById("confetti-canvas");
+    const ctx = canvas.getContext("2d");
+    let confetti = [];
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    window.addEventListener("resize", resizeCanvas);
+    resizeCanvas();
+
+    function randomColor() {
+      const colors = ["#ff4081", "#ffeb3b", "#4caf50", "#2196f3", "#ff5722"];
+      return colors[Math.floor(Math.random() * colors.length)];
+    }
+
+    function createConfettiPiece() {
+      return {
+        x: Math.random() * canvas.width,
+        y: Math.random() * -canvas.height,
+        size: Math.random() * 6 + 4,
+        color: randomColor(),
+        speed: Math.random() * 3 + 2,
+        opacity: Math.random() * 0.5 + 0.5
+      };
+    }
+
+    function updateConfetti() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      confetti.forEach(c => {
+        c.y += c.speed;
+        if (c.y > canvas.height) {
+          c.y = -c.size;
+          c.x = Math.random() * canvas.width;
+        }
+        ctx.globalAlpha = c.opacity;
+        ctx.fillStyle = c.color;
+        ctx.fillRect(c.x, c.y, c.size, c.size);
+      });
+      ctx.globalAlpha = 1;
+      requestAnimationFrame(updateConfetti);
+    }
+
+    function startConfetti() {
+      confetti = Array.from({ length: 150 }, createConfettiPiece);
+      updateConfetti();
+    }
+  </script>
+</body>
+</html>
