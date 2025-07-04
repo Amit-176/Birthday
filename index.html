@@ -224,7 +224,7 @@
   </style>
 </head>
 <body>
-  <audio id="bg-music" loop>
+  <audio loop id="bg-music">
     <source src="Happy_Birthday___Disco_Singh___Diljit_Dosanjh___Surveen_Chawla___Latest_Punjabi_Songs_2024(128k).mp3" type="">
    </audio>
   <section id="welcome-screen">
@@ -266,17 +266,14 @@
     const cake = document.getElementById("cake");
     const balloonContainer = document.getElementById("balloon-container");
 
-    const audioTracks = [
-      'Happy_Birthday___Disco_Singh___Diljit_Dosanjh.mp3',
-      'Happy_Birthday_Remix___Shanky_Goswami___New_Haryanvi_Songs_Haryanavi_2024___Vikram_Pannu(128k).mp3'
-    ];
+
 
     startBtn.addEventListener("click", () => {
       leftGate.classList.add("open-left");
       rightGate.classList.add("open-right");
-debugger
-      const selectedTrack = audioTracks[Math.floor(Math.random() * audioTracks.length)];
-      bgMusic.src = selectedTrack;
+
+      // const selectedTrack = audioTracks[Math.floor(Math.random() * audioTracks.length)];
+      // bgMusic.src = selectedTrack;
       bgMusic.play();
 
       setTimeout(() => {
